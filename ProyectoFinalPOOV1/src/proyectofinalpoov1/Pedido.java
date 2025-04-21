@@ -16,7 +16,7 @@ public class Pedido {
 
     public double CalcularMonto() {
         double total = 0;
-        for (int i = 1; i < items.length; i++) {
+        for (int i = 0; i < items.length; i++) {
             total += items[i].getSubtotal();
 
         }
