@@ -19,7 +19,7 @@ public class Restaurante {
     public Voucher recibirPago(Pedido pedido, Pago pago) {
         double total = pedido.CalcularMonto() * 1.18;
         if (pago.procesar(total)) {
-            return new Voucher("0001", new Date(), pedido, pago);
+            return new Voucher(new Date(), pedido, pago);
         } else {
             System.out.println("Error: Pago insuficiente");
             return null;

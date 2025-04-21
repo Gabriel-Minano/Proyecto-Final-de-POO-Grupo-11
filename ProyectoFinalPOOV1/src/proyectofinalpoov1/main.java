@@ -68,5 +68,6 @@ public class main {
         }
 
         Lector.close();
+        
     }
 }

@@ -6,13 +6,11 @@ import java.text.SimpleDateFormat;
 
 public class Voucher {
 
-    private String id;
     private Date fecha;
     private Pedido pedido;
     private Pago pago;
 
-    public Voucher(String id, Date fecha, Pedido pedido, Pago pago) {
-        this.id = id;
+    public Voucher(Date fecha, Pedido pedido, Pago pago) {
         this.fecha = fecha;
         this.pedido = pedido;
         this.pago = pago;
@@ -52,8 +50,7 @@ public class Voucher {
 
         if (pago instanceof PagoTarjeta) {
             System.out.println("\n Pagado con tarjeta POS");
-        } else if (pago instanceof PagoEfectivo) {
-            PagoEfectivo efectivo = (PagoEfectivo) pago; //Casting, para usar métodos de PagoEfectivo
+        } else if (pago instanceof PagoEfectivo efectivo) { //Casting, para usar métodos de PagoEfectivo
             System.out.println("\n Pagado en efectivo");
             System.out.printf(" Monto Entregado: S/. %.2f\n", efectivo.getMonto());
             System.out.printf(" Vuelto: S/. %.2f\n", efectivo.getVuelto(total));
