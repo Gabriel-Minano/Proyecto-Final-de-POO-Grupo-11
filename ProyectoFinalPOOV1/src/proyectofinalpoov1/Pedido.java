@@ -27,26 +27,12 @@ public class Pedido {
         return numero;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
     public ItemPedido[] getItems() {
         return items;
-    }
-
-    public void setItems(ItemPedido[] items) {
-        this.items = items;
     }
 
     public Cliente getCliente() {
         return cliente;
     }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-   
 
 }

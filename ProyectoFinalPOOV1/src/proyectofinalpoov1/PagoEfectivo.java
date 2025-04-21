@@ -22,10 +22,4 @@ public class PagoEfectivo extends Pago {
         return montoEntregado;
     }
 
-    public void setMontoEntregado(double montoEntregado) {
-        this.montoEntregado = montoEntregado;
-    }
-
-
-
 }

@@ -18,8 +18,4 @@ public class PagoTarjeta extends Pago { //PagoTarjeta heredára los métodos y a
         return lectorId;
     }
 
-    public void setLectorId(String lectorId) {
-        this.lectorId = lectorId;
-    }
-
 }

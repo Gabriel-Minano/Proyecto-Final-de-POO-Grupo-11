@@ -24,33 +24,37 @@ public class main {
             System.out.print("\nNombre del producto: ");
             String nombreProducto = Lector.nextLine();
             System.out.print("Precio unitario: ");
-            double precio = Double.parseDouble(Lector.nextLine());
+            double precio = Lector.nextDouble();
             System.out.print("Cantidad: ");
-            int cantidad = Integer.parseInt(Lector.nextLine());
-
+            int cantidad = Lector.nextInt();
+            Lector.nextLine();
             Producto producto = new Producto(nombreProducto, precio);
             ItemPedido item = new ItemPedido(producto, cantidad);
             items[contador++] = item;
 
             System.out.print("¿Desea agregar otro producto? (s/n): ");
             opcion = Lector.nextLine();
-        } while (opcion.equalsIgnoreCase("s") && contador < 10);
+        } while (opcion.equalsIgnoreCase("s") && contador < 10);  // max 10, pero se puede ampliar
 
         ItemPedido[] itemsFinal = new ItemPedido[contador];
         System.arraycopy(items, 0, itemsFinal, 0, contador);
 
-        Pedido pedido = new Pedido(421, itemsFinal, cliente);
+        System.out.println("Ingrese el número del pedido comprendido por fecha y hora ejemplo (214251236: 21 día, 4 mes, 25 año, 12 hora, 36 minutos): ");
+        int numerop = Lector.nextInt();
+        Lector.nextLine();
+        Pedido pedido = new Pedido(numerop, itemsFinal, cliente);
 
         Pago pago;
         System.out.println("\nSeleccione método de pago:");
         System.out.println("1. Efectivo");
         System.out.println("2. Tarjeta");
-        int metodo = Integer.parseInt(Lector.nextLine());
+        int metodo = Lector.nextInt();
+        Lector.nextLine();
         double total = pedido.CalcularMonto() * 1.18;
 
         if (metodo == 1) {
             System.out.print("Ingrese monto entregado: ");
-            double entregado = Double.parseDouble(Lector.nextLine());
+            double entregado = Lector.nextDouble();
             pago = new PagoEfectivo(entregado);
         } else {
             System.out.print("Ingrese código de lector POS: ");

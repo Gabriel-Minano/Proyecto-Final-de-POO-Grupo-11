@@ -11,8 +11,4 @@ public abstract class Pago { //Sirve como modelo para las otras formas de pago, 
         return monto;
     }
 
-    public void setMonto(double monto) {
-        this.monto = monto;
-    }
-
 }
