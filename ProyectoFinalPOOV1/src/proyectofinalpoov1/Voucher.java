@@ -20,6 +20,7 @@ public class Voucher {
 
     public void imprimir(String nombreRestaurante, String ruc, String telefono) {
         SimpleDateFormat FechaSimple = new SimpleDateFormat("dd/mm/yyyy");
+        System.out.println("-------------------------------------\n");
         System.out.printf("""
                             RESTAURANTE: %s
                             RUC: %s

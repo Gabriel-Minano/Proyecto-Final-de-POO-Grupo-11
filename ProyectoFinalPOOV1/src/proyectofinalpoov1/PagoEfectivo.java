@@ -2,7 +2,7 @@ package proyectofinalpoov1;
 
 public class PagoEfectivo extends Pago {
 
-    double montoEntregado;
+    private double montoEntregado;
 
     public PagoEfectivo(double montoEntregado) {
         this.montoEntregado = montoEntregado;
@@ -17,5 +17,15 @@ public class PagoEfectivo extends Pago {
     public double getVuelto(double montoTotal) {
         return montoEntregado - montoTotal;
     }
+
+    public double getMontoEntregado() {
+        return montoEntregado;
+    }
+
+    public void setMontoEntregado(double montoEntregado) {
+        this.montoEntregado = montoEntregado;
+    }
+
+
 
 }
