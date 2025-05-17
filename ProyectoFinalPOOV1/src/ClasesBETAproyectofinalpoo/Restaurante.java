@@ -1,4 +1,4 @@
-package proyectofinalpoov1;
+package ClasesBETAproyectofinalpoo;
 
 import java.util.Date;
 

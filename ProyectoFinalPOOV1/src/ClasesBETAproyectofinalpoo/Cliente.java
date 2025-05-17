@@ -1,4 +1,4 @@
-package proyectofinalpoov1;
+package ClasesBETAproyectofinalpoo;
 //Solo hay encapsulamiento en esta clase
 
 public class Cliente {

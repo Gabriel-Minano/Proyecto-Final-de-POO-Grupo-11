@@ -1,4 +1,4 @@
-package proyectofinalpoov1;
+package ClasesBETAproyectofinalpoo;
 
 /*Para el que va a revisar hay encapsulamiento por los private, getters y 
 setters. Además, hay abstracción porque no se explica de que está hecho el producto

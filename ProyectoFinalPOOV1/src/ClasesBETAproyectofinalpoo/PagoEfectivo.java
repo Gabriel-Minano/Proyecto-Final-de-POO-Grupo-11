@@ -1,4 +1,4 @@
-package proyectofinalpoov1;
+package ClasesBETAproyectofinalpoo;
 
 public class PagoEfectivo extends Pago {
 

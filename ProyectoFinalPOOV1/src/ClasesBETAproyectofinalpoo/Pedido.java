@@ -1,4 +1,4 @@
-package proyectofinalpoov1;
+package ClasesBETAproyectofinalpoo;
 //Hay ncapsulamiento y abstracción, este último porque no se explica los datos irrelevantes
 
 public class Pedido {

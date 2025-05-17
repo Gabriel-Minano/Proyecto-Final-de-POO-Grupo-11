@@ -1,4 +1,4 @@
-package proyectofinalpoov1;
+package ClasesBETAproyectofinalpoo;
 //Aquí hay polimorfismo, ya que usaremos procesar de distintas maneras para las distintas formas de pagas
 
 public abstract class Pago { //Sirve como modelo para las otras formas de pago, para ello usaré override

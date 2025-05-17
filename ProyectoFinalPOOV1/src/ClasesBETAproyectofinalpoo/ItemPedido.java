@@ -1,4 +1,4 @@
-package proyectofinalpoov1;
+package ClasesBETAproyectofinalpoo;
 //Hay encapsulamiento por los private y los getters and setters
 //Hay encapsulamiento por los private y los getters and setters
 

@@ -1,4 +1,4 @@
-package proyectofinalpoov1;
+package ClasesBETAproyectofinalpoo;
 
 public class PagoTarjeta extends Pago { //PagoTarjeta heredára los métodos y atributos de la clase pago
 
