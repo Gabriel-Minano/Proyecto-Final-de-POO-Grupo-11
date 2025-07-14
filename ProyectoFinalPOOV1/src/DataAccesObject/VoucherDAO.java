@@ -17,14 +17,12 @@ public class VoucherDAO extends ConexionMySQL implements IBaseDAO<Voucher> {
         try {
             String SQL = "INSERT INTO Voucher (id_voucher, id_pago, voucher_fecha, voucher_contenido) VALUES (?,?,?,?)";
             PreparedStatement pst = getConexion().prepareStatement(SQL);
-            String uuid = UUID.randomUUID().toString();
-            input.setId_voucher(uuid);
-            pst.setString(1, uuid);
+            input.setId_voucher(UUID.randomUUID().toString());
+            pst.setString(1, input.getId_voucher());
             pst.setString(2, input.getId_pago());
             pst.setTimestamp(3, new Timestamp(input.getVoucher_fecha().getTime()));
             pst.setString(4, input.getVoucher_contenido());
-
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en VoucherDAO.Create: " + e.getMessage());
         }
@@ -83,7 +81,7 @@ public class VoucherDAO extends ConexionMySQL implements IBaseDAO<Voucher> {
             pst.setString(3, input.getVoucher_contenido());
             pst.setString(4, input.getId_voucher());
             
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en VoucherDAO.Update: " + e.getMessage());
         }
@@ -96,7 +94,7 @@ public class VoucherDAO extends ConexionMySQL implements IBaseDAO<Voucher> {
         try {
             PreparedStatement pst = getConexion().prepareStatement("DELETE FROM Voucher WHERE id_voucher=?");
             pst.setString(1, id);
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en VoucherDAO.Delete: " + e.getMessage());
         }

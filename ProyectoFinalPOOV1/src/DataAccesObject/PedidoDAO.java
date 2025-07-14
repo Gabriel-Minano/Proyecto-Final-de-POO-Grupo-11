@@ -1,6 +1,5 @@
 package DataAccesObject;
 
-
 import BusinessEntity.Pedido;
 import java.util.List;
 import java.sql.PreparedStatement;
@@ -14,20 +13,20 @@ public class PedidoDAO extends ConexionMySQL implements IBaseDAO<Pedido> {
 
     @Override
     public boolean Create(Pedido input) {
-    boolean result = false;
+        boolean result = false;
         try {
             String SQL = "INSERT INTO Pedido (id_pedido, id_cliente, pedido_fecha, pedido_estado, pedido_subtotal, pedido_total) VALUES (?,?,?,?,?,?)";
             PreparedStatement pst = getConexion().prepareStatement(SQL);
             String uuid = UUID.randomUUID().toString();
-            input.setId_pedido(uuid);
-            pst.setString(1, uuid);
+            pst.setString(1, input.getId_pedido());
             pst.setString(2, input.getId_cliente());
             pst.setTimestamp(3, new Timestamp(input.getPedido_fecha().getTime()));
             pst.setString(4, input.getPedido_estado());
             pst.setDouble(5, input.getPedido_subtotal());
             pst.setDouble(6, input.getPedido_total());
 
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
+
         } catch (Exception e) {
             System.out.println("Error en PedidoDAO.Create: " + e.getMessage());
         }
@@ -42,7 +41,7 @@ public class PedidoDAO extends ConexionMySQL implements IBaseDAO<Pedido> {
             pst.setString(1, id);
             ResultSet res = pst.executeQuery();
             if (res.next()) {
-                pedido.setId_cliente(res.getString("id_pedido"));
+                pedido.setId_pedido(res.getString("id_pedido"));
                 pedido.setId_cliente(res.getString("id_cliente"));
                 pedido.setPedido_fecha(res.getTimestamp("pedido_fecha"));
                 pedido.setPedido_estado(res.getString("pedido_estado"));
@@ -64,7 +63,7 @@ public class PedidoDAO extends ConexionMySQL implements IBaseDAO<Pedido> {
 
             while (res.next()) {
                 Pedido pedido = new Pedido();
-                pedido.setId_cliente(res.getString("id_pedido"));
+                pedido.setId_pedido(res.getString("id_pedido"));
                 pedido.setId_cliente(res.getString("id_cliente"));
                 pedido.setPedido_fecha(res.getTimestamp("pedido_fecha"));
                 pedido.setPedido_estado(res.getString("pedido_estado"));
@@ -91,7 +90,7 @@ public class PedidoDAO extends ConexionMySQL implements IBaseDAO<Pedido> {
             pst.setDouble(4, input.getPedido_subtotal());
             pst.setDouble(5, input.getPedido_total());
             pst.setString(6, input.getId_pedido());
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en PedidoDAO.Update: " + e.getMessage());
         }
@@ -104,11 +103,37 @@ public class PedidoDAO extends ConexionMySQL implements IBaseDAO<Pedido> {
         try {
             PreparedStatement pst = getConexion().prepareStatement("DELETE FROM Pedido WHERE id_pedido=?");
             pst.setString(1, id);
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en PedidoDAO.Delete: " + e.getMessage());
         }
         return result;
+    }
+    public String CreateAndReturnID(Pedido input) {
+        String idGenerado = null;
+        try {
+            String SQL = "INSERT INTO Pedido (id_pedido, id_cliente, pedido_fecha, pedido_estado, pedido_subtotal, pedido_total) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = getConexion().prepareStatement(SQL);
+
+            // Generar un UUID para el ID del pedido
+            String uuid = UUID.randomUUID().toString();
+            input.setId_pedido(uuid);
+
+            pst.setString(1, uuid);
+            pst.setString(2, input.getId_cliente());
+            pst.setTimestamp(3, new Timestamp(input.getPedido_fecha().getTime()));
+            pst.setString(4, input.getPedido_estado());
+            pst.setDouble(5, input.getPedido_subtotal());
+            pst.setDouble(6, input.getPedido_total());
+
+            int filas = pst.executeUpdate();
+            if (filas > 0) {
+                idGenerado = uuid;
+            }
+        } catch (Exception e) {
+            System.out.println("Error en PedidoDAO.CreateAndReturnID: " + e.getMessage());
+        }
+        return idGenerado;
     }
 
 }

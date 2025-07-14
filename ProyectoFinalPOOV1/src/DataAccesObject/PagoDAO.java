@@ -19,6 +19,7 @@ public class PagoDAO extends ConexionMySQL implements IBaseDAO<Pago> {
             PreparedStatement pst = getConexion().prepareStatement(SQL);
             String uuid = UUID.randomUUID().toString();
             input.setId_pago(uuid);
+
             pst.setString(1, uuid);
             pst.setString(2, input.getId_pedido());
             pst.setString(3, input.getPago_tipo());
@@ -26,7 +27,7 @@ public class PagoDAO extends ConexionMySQL implements IBaseDAO<Pago> {
             pst.setDouble(5, input.getPago_vuelto());
             pst.setTimestamp(6, new Timestamp(input.getPago_fecha().getTime()));
 
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en PagoDAO.Create: " + e.getMessage());
         }
@@ -37,11 +38,12 @@ public class PagoDAO extends ConexionMySQL implements IBaseDAO<Pago> {
     public Pago Read(String id) {
         Pago pago = new Pago();
         try {
-            PreparedStatement pst = getConexion().prepareStatement("SELECT * FROM Pago WHERE id_pago=?");
+            PreparedStatement pst = getConexion()
+                    .prepareStatement("SELECT * FROM Pago WHERE id_pago = ?");
             pst.setString(1, id);
             ResultSet res = pst.executeQuery();
             if (res.next()) {
-                pago.setId_pago(id);
+                pago.setId_pago(res.getString("id_pago"));
                 pago.setId_pedido(res.getString("id_pedido"));
                 pago.setPago_tipo(res.getString("pago_tipo"));
                 pago.setPago_monto(res.getDouble("pago_monto"));
@@ -60,7 +62,6 @@ public class PagoDAO extends ConexionMySQL implements IBaseDAO<Pago> {
         try {
             Statement stm = getConexion().createStatement();
             ResultSet res = stm.executeQuery("SELECT * FROM Pago");
-
             while (res.next()) {
                 Pago pago = new Pago();
                 pago.setId_pago(res.getString("id_pago"));
@@ -69,7 +70,6 @@ public class PagoDAO extends ConexionMySQL implements IBaseDAO<Pago> {
                 pago.setPago_monto(res.getDouble("pago_monto"));
                 pago.setPago_vuelto(res.getDouble("pago_vuelto"));
                 pago.setPago_fecha(res.getTimestamp("pago_fecha"));
-
                 pagos.add(pago);
             }
         } catch (Exception e) {
@@ -90,8 +90,7 @@ public class PagoDAO extends ConexionMySQL implements IBaseDAO<Pago> {
             pst.setDouble(4, input.getPago_vuelto());
             pst.setTimestamp(5, new Timestamp(input.getPago_fecha().getTime()));
             pst.setString(6, input.getId_pago());
-
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en PagoDAO.Update: " + e.getMessage());
         }
@@ -102,7 +101,7 @@ public class PagoDAO extends ConexionMySQL implements IBaseDAO<Pago> {
     public boolean Delete(String id) {
         boolean result = false;
         try {
-            PreparedStatement pst = getConexion().prepareStatement("DELETE FROM Pago WHERE id_pago=?");
+            PreparedStatement pst = getConexion().prepareStatement("DELETE FROM Pago WHERE id_pago = ?");
             pst.setString(1, id);
             result = pst.executeUpdate() > 0;
         } catch (Exception e) {

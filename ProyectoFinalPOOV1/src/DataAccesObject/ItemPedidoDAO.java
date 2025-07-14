@@ -8,12 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.UUID;
 
-/*id_item VARCHAR(50) PRIMARY KEY,
-    id_pedido VARCHAR(50) NOT NULL,
-    id_producto VARCHAR(50) NOT NULL,
-    cantidad INT NOT NULL,
-    precio_unitario DECIMAL(10,2) NOT NULL,
-    subtotal DECIMAL(10,2) NOT NULL,*/
 public class ItemPedidoDAO extends ConexionMySQL implements IBaseDAO<ItemPedido> {
 
     @Override
@@ -22,8 +16,14 @@ public class ItemPedidoDAO extends ConexionMySQL implements IBaseDAO<ItemPedido>
         try {
             String SQL = "INSERT INTO ItemPedido (id_item, id_pedido, id_producto, item_cantidad, item_precio_unitario, item_subtotal) VALUES (?,?,?,?,?,?)";
             PreparedStatement pst = getConexion().prepareStatement(SQL);
+
+            // Validación para evitar errores por claves foráneas nulas
+            if (input.getId_pedido() == null || input.getId_pedido().isEmpty()) {
+                throw new IllegalArgumentException("ID de pedido no puede ser nulo o vacío");
+            }
+
             String uuid = UUID.randomUUID().toString();
-            input.setId_producto(uuid);
+            input.setId_item(uuid); // ID del ítem generado por el DAO
             pst.setString(1, uuid);
             pst.setString(2, input.getId_pedido());
             pst.setString(3, input.getId_producto());
@@ -31,7 +31,9 @@ public class ItemPedidoDAO extends ConexionMySQL implements IBaseDAO<ItemPedido>
             pst.setDouble(5, input.getItem_precio_unitario());
             pst.setDouble(6, input.getItem_subtotal());
 
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Validación en ItemPedidoDAO.Create: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Error en ItemPedidoDAO.Create: " + e.getMessage());
         }
@@ -52,7 +54,6 @@ public class ItemPedidoDAO extends ConexionMySQL implements IBaseDAO<ItemPedido>
                 item.setItem_cantidad(res.getInt("item_cantidad"));
                 item.setItem_precio_unitario(res.getDouble("item_precio_unitario"));
                 item.setItem_subtotal(res.getDouble("item_subtotal"));
-
             }
         } catch (Exception e) {
             System.out.println("Error en ItemPedidoDAO.Read: " + e.getMessage());
@@ -94,7 +95,8 @@ public class ItemPedidoDAO extends ConexionMySQL implements IBaseDAO<ItemPedido>
             pst.setInt(3, input.getItem_cantidad());
             pst.setDouble(4, input.getItem_precio_unitario());
             pst.setDouble(5, input.getItem_subtotal());
-            result = pst.execute();
+            pst.setString(6, input.getId_item());
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en ItemPedidoDAO.Update: " + e.getMessage());
         }
@@ -107,7 +109,7 @@ public class ItemPedidoDAO extends ConexionMySQL implements IBaseDAO<ItemPedido>
         try {
             PreparedStatement pst = getConexion().prepareStatement("DELETE FROM ItemPedido WHERE id_item=?");
             pst.setString(1, id);
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en ItemPedidoDAO.Delete: " + e.getMessage());
         }

@@ -24,7 +24,7 @@ public class EmpleadoDAO extends ConexionMySQL implements IBaseDAO<Empleado> {
             pst.setString(4, input.getEmpleado_direccion());
             pst.setString(5, input.getEmpleado_cargo());
 
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en EmpleadoDAO.Create: " + e.getMessage());
         }
@@ -86,7 +86,7 @@ public class EmpleadoDAO extends ConexionMySQL implements IBaseDAO<Empleado> {
             pst.setString(4, input.getEmpleado_cargo());
             pst.setString(5, input.getId_empleado());
             
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en EmpleadoDAO.Update: " + e.getMessage());
         }
@@ -99,7 +99,7 @@ public class EmpleadoDAO extends ConexionMySQL implements IBaseDAO<Empleado> {
         try {
             PreparedStatement pst = getConexion().prepareStatement("DELETE FROM Empleado WHERE id_empleado=?");
             pst.setString(1, id);
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en EmpleadoDAO.Delete: " + e.getMessage());
         }

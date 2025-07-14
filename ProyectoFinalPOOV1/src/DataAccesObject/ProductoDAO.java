@@ -14,17 +14,16 @@ public class ProductoDAO extends ConexionMySQL implements IBaseDAO<Producto> {
     public boolean Create(Producto input) {
         boolean result = false;
         try {
-            String SQL = "INSERT INTO Producto (id_producto, producto_nombre, producto_descripcion, producto_precio, producto_stock) VALUES (?,?,?,?,?)";
+            String SQL = "INSERT INTO Producto (id_producto, producto_nombre, producto_precio, producto_stock) VALUES (?,?,?,?)";
             PreparedStatement pst = getConexion().prepareStatement(SQL);
             String uuid = UUID.randomUUID().toString();
             input.setId_producto(uuid);
             pst.setString(1, uuid);
             pst.setString(2, input.getProducto_nombre());
-            pst.setString(3, input.getProducto_descripcion());
-            pst.setDouble(4, input.getProducto_precio());
-            pst.setInt(5, input.getProducto_stock());
+            pst.setDouble(3, input.getProducto_precio());
+            pst.setInt(4, input.getProducto_stock());
 
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en ProductoDAO.Create: " + e.getMessage());
         }
@@ -41,7 +40,6 @@ public class ProductoDAO extends ConexionMySQL implements IBaseDAO<Producto> {
             if (res.next()) {
                 producto.setId_producto(id);
                 producto.setProducto_nombre(res.getString("producto_nombre"));
-                producto.setProducto_descripcion(res.getString("producto_descripcion"));
                 producto.setProducto_precio(res.getDouble("producto_precio"));
                 producto.setProducto_stock(res.getInt("producto_stock"));
             }
@@ -62,7 +60,6 @@ public class ProductoDAO extends ConexionMySQL implements IBaseDAO<Producto> {
                 Producto producto = new Producto();
                 producto.setId_producto(res.getString("id_producto"));
                 producto.setProducto_nombre(res.getString("producto_nombre"));
-                producto.setProducto_descripcion(res.getString("producto_descripcion"));
                 producto.setProducto_precio(res.getDouble("producto_precio"));
                 producto.setProducto_stock(res.getInt("producto_stock"));
 
@@ -78,15 +75,14 @@ public class ProductoDAO extends ConexionMySQL implements IBaseDAO<Producto> {
     public boolean Update(Producto input) {
         boolean result = false;
         try {
-            String SQL = "UPDATE Producto SET producto_nombre=?, producto_descripcion=?, producto_precio=?, producto_stock=? WHERE id_producto=?";
+            String SQL = "UPDATE Producto SET producto_nombre=?, producto_precio=?, producto_stock=? WHERE id_producto=?";
             PreparedStatement pst = getConexion().prepareStatement(SQL);
             pst.setString(1, input.getProducto_nombre());
-            pst.setString(2, input.getProducto_descripcion());
-            pst.setDouble(3, input.getProducto_precio());
-            pst.setInt(4, input.getProducto_stock());
-            pst.setString(5, input.getId_producto());
+            pst.setDouble(2, input.getProducto_precio());
+            pst.setInt(3, input.getProducto_stock());
+            pst.setString(4, input.getId_producto());
 
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en ProductoDAO.Update: " + e.getMessage());
         }
@@ -99,7 +95,7 @@ public class ProductoDAO extends ConexionMySQL implements IBaseDAO<Producto> {
         try {
             PreparedStatement pst = getConexion().prepareStatement("DELETE FROM Producto WHERE id_producto=?");
             pst.setString(1, id);
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en ProductoDAO.Delete: " + e.getMessage());
         }
