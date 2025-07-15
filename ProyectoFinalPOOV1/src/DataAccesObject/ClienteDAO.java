@@ -23,7 +23,7 @@ public class ClienteDAO extends ConexionMySQL implements IBaseDAO<Cliente> {
             pst.setString(3, input.getCliente_telefono());
             pst.setString(4, input.getCliente_direccion());
 
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en ClienteDAO.Create: " + e.getMessage());
         }
@@ -82,7 +82,7 @@ public class ClienteDAO extends ConexionMySQL implements IBaseDAO<Cliente> {
             pst.setString(3, input.getCliente_direccion());
             pst.setString(4, input.getId_cliente());
 
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en ClienteDAO.Update: " + e.getMessage());
         }
@@ -95,7 +95,7 @@ public class ClienteDAO extends ConexionMySQL implements IBaseDAO<Cliente> {
         try {
             PreparedStatement pst = getConexion().prepareStatement("DELETE FROM Cliente WHERE id_cliente=?");
             pst.setString(1, id);
-            result = pst.execute();
+            result = pst.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error en ClienteDAO.Delete: " + e.getMessage());
         }

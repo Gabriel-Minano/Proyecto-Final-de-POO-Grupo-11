@@ -3,7 +3,6 @@ package BusinessEntity;
 public class Producto {
     private String id_producto;
     private String producto_nombre;
-    private String producto_descripcion;
     private double producto_precio;
     private int producto_stock;
 
@@ -24,14 +23,6 @@ public class Producto {
 
     public void setProducto_nombre(String producto_nombre) {
         this.producto_nombre = producto_nombre;
-    }
-
-    public String getProducto_descripcion() {
-        return producto_descripcion;
-    }
-
-    public void setProducto_descripcion(String producto_descripcion) {
-        this.producto_descripcion = producto_descripcion;
     }
 
     public double getProducto_precio() {

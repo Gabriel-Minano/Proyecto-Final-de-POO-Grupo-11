@@ -10,9 +10,9 @@ public class ConexionMySQL {
     //propiedades conexion
     //mysql://root:gGIGLdbFnLgSQVPoXKVHGETejUbvnBVp@shuttle.proxy.rlwy.net:44776/railway
 
-    private String StrConxMySQL = "jdbc:mysql://shuttle.proxy.rlwy.net:44776/railway"; //Apartir del //pones
+    private String StrConxMySQL = "jdbc:mysql://localhost/proyectofinal"; //Apartir del //pones
     private String StrUserMySQL = "root";
-    private String StrPassMySQL = "gGIGLdbFnLgSQVPoXKVHGETejUbvnBVp"; //Contraseña
+    private String StrPassMySQL = ""; //Contraseña
     private Connection Conexion;
 
     //Constructor vacio
