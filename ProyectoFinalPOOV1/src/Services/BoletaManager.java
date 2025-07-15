@@ -227,6 +227,10 @@ public class BoletaManager {
         Predicate<Producto> filtro = p -> p.getProducto_stock() < umbral;
         return productos.stream().filter(filtro).collect(Collectors.toList());
     }
+    
+    public ClienteDAO getClienteDAO() {
+    return this.clienteDAO;
+}
 
     public static void main(String[] args) {
         BoletaManager manager = new BoletaManager();
