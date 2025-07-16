@@ -4,6 +4,7 @@ public class Cliente {
 
     private String id_cliente;
     private String cliente_nombre;
+    private String cliente_dni;
     private String cliente_telefono;
     private String cliente_direccion;
 
@@ -26,6 +27,14 @@ public class Cliente {
         this.cliente_nombre = cliente_nombre;
     }
 
+    public String getCliente_dni() {
+        return cliente_dni;
+    }
+
+    public void setCliente_dni(String cliente_dni) {
+        this.cliente_dni = cliente_dni;
+    }
+
     public String getCliente_telefono() {
         return cliente_telefono;
     }
@@ -42,7 +51,4 @@ public class Cliente {
         this.cliente_direccion = cliente_direccion;
     }
 
-
-
-    
 }

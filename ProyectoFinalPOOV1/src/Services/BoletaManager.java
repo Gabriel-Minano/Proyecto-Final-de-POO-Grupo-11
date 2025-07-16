@@ -3,7 +3,6 @@ package Services;
 import BusinessEntity.*;
 import DataAccesObject.*;
 
-import java.io.*;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -63,6 +62,8 @@ public class BoletaManager {
         cliente.setId_cliente(UUID.randomUUID().toString());
         System.out.print("Nombre del cliente: ");
         cliente.setCliente_nombre(sc.nextLine());
+        System.out.print("DNI del cliente: ");
+        cliente.setCliente_dni(sc.nextLine());
         System.out.print("Teléfono del cliente: ");
         cliente.setCliente_telefono(sc.nextLine());
         System.out.print("Dirección del cliente: ");
@@ -238,13 +239,12 @@ public class BoletaManager {
                                2. Agregar producto al carrito
                                3. Ver total del carrito
                                4. Generar boleta
-                               5. Ver productos con bajo stock (< 5)
-                               6. Registrar nuevo cliente
-                               7. Registrar nuevo producto
-                               8. Registrar nuevo empleado
-                               9. Mostrar clientes
-                               10. Mostrar productos
-                               11. Mostrar empleados
+                               5. Registrar nuevo cliente
+                               6. Registrar nuevo producto
+                               7. Registrar nuevo empleado
+                               8. Mostrar clientes
+                               9. Mostrar productos
+                               10. Mostrar empleados
                                0. Salir""");
             System.out.print("Seleccione opción: ");
             int opcion = sc.nextInt();
@@ -282,25 +282,21 @@ public class BoletaManager {
                     manager.generarBoleta(idCliente, tipoPago, monto);
                     break;
                 case 5:
-                    List<Producto> bajoStock = manager.listarProductosConStockBajo(5);
-                    bajoStock.forEach(p -> System.out.println(p.getProducto_nombre() + " (stock: " + p.getProducto_stock() + ")"));
-                    break;
-                case 6:
                     manager.registrarCliente(sc);
                     break;
-                case 7:
+                case 6:
                     manager.registrarProducto(sc);
                     break;
-                case 8:
+                case 7:
                     manager.registrarEmpleado(sc);
                     break;
-                case 9:
+                case 8:
                     manager.mostrarClientes();
                     break;
-                case 10:
+                case 9:
                     manager.mostrarProductos();
                     break;
-                case 11:
+                case 10:
                     manager.mostrarEmpleados();
                     break;
                 case 0:

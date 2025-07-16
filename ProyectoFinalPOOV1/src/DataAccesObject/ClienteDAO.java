@@ -14,14 +14,15 @@ public class ClienteDAO extends ConexionMySQL implements IBaseDAO<Cliente> {
     public boolean Create(Cliente input) {
         boolean result = false;
         try {
-            String SQL = "INSERT INTO Cliente (id_cliente, cliente_nombre, cliente_telefono, cliente_direccion) VALUES (?,?,?,?)";
+            String SQL = "INSERT INTO Cliente (id_cliente, cliente_nombre, cliente_dni, cliente_telefono, cliente_direccion) VALUES (?,?,?,?,?)";
             PreparedStatement pst = getConexion().prepareStatement(SQL);
             String uuid = UUID.randomUUID().toString();
             input.setId_cliente(uuid);
             pst.setString(1, uuid);
             pst.setString(2, input.getCliente_nombre());
-            pst.setString(3, input.getCliente_telefono());
-            pst.setString(4, input.getCliente_direccion());
+            pst.setString(3, input.getCliente_dni());
+            pst.setString(4, input.getCliente_telefono());
+            pst.setString(5, input.getCliente_direccion());
 
             result = pst.executeUpdate() > 0;
         } catch (Exception e) {
